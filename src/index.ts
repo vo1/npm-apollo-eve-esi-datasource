@@ -25,6 +25,11 @@ export interface ESIContext
     token: string,
 }
 
+export interface ScopesType
+{
+	_: string[]
+}
+
 export interface Character
 {
 	id: number;
@@ -52,6 +57,12 @@ export class ESIDataSource extends RESTDataSource<ESIContext>
 	private ESILoginUrl = 'https://login.eveonline.com/v2/oauth/authorize?response_type=code&redirect_uri={{redirect_uri}}&client_id={{client_id}}&scope={{scopes}}&state={{state}}';
 	private ESITokenUrl = 'https://login.eveonline.com/v2/oauth/token';
 	private ESIVerifyUrl = 'https://login.eveonline.com/oauth/verify';
+
+	getScopes(): Promise<ScopesType>
+	{
+		let result: ScopesType = { _: this.context.ESI.scopes };
+		return new Promise((r) => r(result));
+	}
 
 	getSSOLoginURL(callbackUri: string, state?: string): string
 	{
