@@ -1,6 +1,6 @@
 {
-  "name": "apollo-datasource-esi",
-  "version": "1.2.0",
+  "name": "apollo-datasource-eve-esi",
+  "version": "1.0.0",
   "description": "EVE ESI Apollo Data Source",
   "main": "index.js",
   "types": "index.d.ts",
