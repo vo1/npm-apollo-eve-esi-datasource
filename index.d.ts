@@ -18,14 +18,35 @@ export interface ESIContext {
     };
     token: string;
 }
+export interface ScopesType {
+    _: string[];
+}
+export interface Character {
+    id: number;
+    allianceId: number;
+    ancestryId: number;
+    birthday: string;
+    bloodlineId: number;
+    corporationId: number;
+    description: string;
+    factionId: number;
+    gender: string;
+    name: string;
+    raceId: number;
+    securityStatus: number;
+    title: string;
+}
 export declare class ESIDataSource extends RESTDataSource<ESIContext> {
     protected token: AuthToken;
+    protected me: Character;
     private oneTimeAuthorizationToken;
     private API;
     private ESILoginUrl;
     private ESITokenUrl;
     private ESIVerifyUrl;
+    getScopes(): Promise<ScopesType>;
     getSSOLoginURL(callbackUri: string, state?: string): string;
+    getSelf(): Promise<Character>;
     verifyToken(): Promise<number>;
     getAuthorizationToken(code: string): Promise<AuthToken>;
     willSendRequest(request: RequestOptions): ValueOrPromise<void>;

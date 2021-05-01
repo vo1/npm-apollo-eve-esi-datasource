@@ -20,11 +20,16 @@ class ESIDataSource extends apollo_datasource_rest_1.RESTDataSource {
     constructor() {
         super(...arguments);
         this.token = {};
+        this.me = {};
         this.oneTimeAuthorizationToken = '';
         this.API = 'https://esi.evetech.net/latest/';
         this.ESILoginUrl = 'https://login.eveonline.com/v2/oauth/authorize?response_type=code&redirect_uri={{redirect_uri}}&client_id={{client_id}}&scope={{scopes}}&state={{state}}';
         this.ESITokenUrl = 'https://login.eveonline.com/v2/oauth/token';
         this.ESIVerifyUrl = 'https://login.eveonline.com/oauth/verify';
+    }
+    getScopes() {
+        let result = { _: this.context.ESI.scopes };
+        return new Promise((r) => r(result));
     }
     getSSOLoginURL(callbackUri, state) {
         let _state = state || 'esi-gql-data-source';
@@ -33,6 +38,14 @@ class ESIDataSource extends apollo_datasource_rest_1.RESTDataSource {
             .replace('{{scopes}}', this.context.ESI.scopes.join(' '))
             .replace('{{redirect_uri}}', callbackUri)
             .replace('{{state}}', _state));
+    }
+    getSelf() {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (typeof (this.me.id) === 'undefined') {
+                this.me = (yield this.query(`characters/:id`, yield this.verifyToken()));
+            }
+            return this.me;
+        });
     }
     verifyToken() {
         return __awaiter(this, void 0, void 0, function* () {
