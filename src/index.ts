@@ -25,6 +25,23 @@ export interface ESIContext
     token: string,
 }
 
+export interface Character
+{
+	id: number;
+	allianceId: number;
+	ancestryId: number;
+	birthday: string;
+	bloodlineId: number;
+	corporationId: number;
+	description: string;
+	factionId: number;
+	gender: string;
+	name: string;
+	raceId: number;
+	securityStatus: number;
+	title: string;
+}
+
 export class ESIDataSource extends RESTDataSource<ESIContext>
 {
 	protected token:AuthToken = {};
@@ -46,9 +63,9 @@ export class ESIDataSource extends RESTDataSource<ESIContext>
 		);
 	}
 
-	async getSelf()
+	async getSelf(): Promise<Character>
 	{
-		return (await this.query(`characters/:id`, await this.verifyToken()));
+		return this.query(`characters/:id`, await this.verifyToken());
 	}
 	
 	async verifyToken(): Promise<number>
