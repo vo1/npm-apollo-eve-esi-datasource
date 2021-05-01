@@ -1,2 +1,2 @@
-# npm-apollo-eve-esi-datasource
-Apollo ESI Data Source
+# apollo-eve-esi-datasource
+Apollo Data Source for EVE ESI 
