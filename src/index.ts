@@ -45,6 +45,8 @@ export interface Character
 export class ESIDataSource extends RESTDataSource<ESIContext>
 {
 	protected token:AuthToken = {};
+	protected me: Character = <Character>{};
+	
 	private oneTimeAuthorizationToken: string = '';
 	private API:string = 'https://esi.evetech.net/latest/';
 	private ESILoginUrl = 'https://login.eveonline.com/v2/oauth/authorize?response_type=code&redirect_uri={{redirect_uri}}&client_id={{client_id}}&scope={{scopes}}&state={{state}}';
@@ -65,7 +67,10 @@ export class ESIDataSource extends RESTDataSource<ESIContext>
 
 	async getSelf(): Promise<Character>
 	{
-		return this.query(`characters/:id`, await this.verifyToken());
+		if (typeof(this.me.id) === 'undefined') {
+			this.me = <Character>(await this.query(`characters/:id`, await this.verifyToken()));
+		}
+		return this.me;
 	}
 	
 	async verifyToken(): Promise<number>
