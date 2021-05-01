@@ -1,0 +1,23 @@
+{
+  "name": "apollo-datasource-esi",
+  "version": "1.0.0",
+  "description": "EVE ESI Apollo Data Source",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "dependencies": {
+    "graphql": "^15.5.0",
+    "@apollo/federation": "^0.21.0",
+    "apollo-datasource-rest": "^0.9.7",
+    "apollo-server-types": "^0.6.3",
+    "base-64": "^1.0.0",
+    "humps": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/humps": "^2.0.0"
+  },
+  "scripts": {
+    "prepare": "tsc"
+  },
+  "author": "",
+  "license": "ISC"
+}
