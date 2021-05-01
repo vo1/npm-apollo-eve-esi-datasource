@@ -11,6 +11,10 @@
     "outDir": "./",
     "rootDir": "src",
     "strict": true,
+	"typeRoots": [
+        "./types",
+        "./node_modules/@types/"
+    ]
   },
   "exclude": [
     "lib",
