@@ -27,7 +27,7 @@ export interface ESIContext
 
 export interface ScopesType
 {
-	_: string[]
+	_: number;
 }
 
 export interface Character
@@ -60,7 +60,7 @@ export class ESIDataSource extends RESTDataSource<ESIContext>
 
 	getScopes(): Promise<ScopesType>
 	{
-		let result: ScopesType = { _: this.context.ESI.scopes };
+		let result: ScopesType = { _: 0 };
 		return new Promise((r) => r(result));
 	}
 

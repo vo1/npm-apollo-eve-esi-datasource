@@ -28,7 +28,7 @@ class ESIDataSource extends apollo_datasource_rest_1.RESTDataSource {
         this.ESIVerifyUrl = 'https://login.eveonline.com/oauth/verify';
     }
     getScopes() {
-        let result = { _: this.context.ESI.scopes };
+        let result = { _: 0 };
         return new Promise((r) => r(result));
     }
     getSSOLoginURL(callbackUri, state) {

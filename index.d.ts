@@ -19,7 +19,7 @@ export interface ESIContext {
     token: string;
 }
 export interface ScopesType {
-    _: string[];
+    _: number;
 }
 export interface Character {
     id: number;
