@@ -18,6 +18,10 @@
   "scripts": {
     "prepare": "tsc"
   },
-  "author": "",
+  "author": "vo1",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:vo1/npm-apollo-eve-esi-datasource.git"
+  },
   "license": "ISC"
 }
