@@ -46,6 +46,11 @@ export class ESIDataSource extends RESTDataSource<ESIContext>
 		);
 	}
 
+	async getSelf()
+	{
+		return (await this.query(`/characters/:id`, this.verifyToken()));
+	}
+	
 	async verifyToken(): Promise<number>
 	{
 		return (await this.get(this.ESIVerifyUrl)).characterID;
