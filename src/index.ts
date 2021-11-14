@@ -64,7 +64,7 @@ export class ESIDataSource extends RESTDataSource<ESIContext>
 		return new Promise((r) => r(result));
 	}
 
-	getSSOLoginURL(callbackUri: string, state?: string, scopes?: [string]): string
+	getSSOLoginURL(callbackUri: string, state?: string, scopes?: string[]): string
 	{
 		let _state: string = state || 'esi-gql-data-source',
 			_scopes = this.context.ESI.scopes;

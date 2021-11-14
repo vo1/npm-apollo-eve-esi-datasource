@@ -45,7 +45,7 @@ export declare class ESIDataSource extends RESTDataSource<ESIContext> {
     private ESITokenUrl;
     private ESIVerifyUrl;
     getScopes(): Promise<ScopesType>;
-    getSSOLoginURL(callbackUri: string, state?: string, scopes?: [string]): string;
+    getSSOLoginURL(callbackUri: string, state?: string, scopes?: string[]): string;
     getSelf(): Promise<Character>;
     verifyToken(): Promise<number>;
     getAuthorizationToken(code: string): Promise<AuthToken>;
