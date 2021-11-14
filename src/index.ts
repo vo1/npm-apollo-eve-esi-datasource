@@ -1,6 +1,8 @@
-import { Request, Response, ValueOrPromise } from 'apollo-server-env'
+import { Request, RequestInit, Response, ValueOrPromise } from 'apollo-server-env'
 import { RequestOptions, RESTDataSource } from 'apollo-datasource-rest'
 import humps from 'humps';
+import { URLSearchParams } from "url";
+
 const base64 = require('base-64');
 
 export interface AuthToken
@@ -96,13 +98,22 @@ export class ESIDataSource extends RESTDataSource<ESIContext>
 	async getAuthorizationToken(code: string): Promise<AuthToken>
 	{
 		this.oneTimeAuthorizationToken = 'Basic ' + base64.encode(this.context.ESI.clientId + ':' + this.context.ESI.clientSecret);
-		return this.post<AuthToken>(this.ESITokenUrl, JSON.stringify({grant_type: "authorization_code", code: code}));
+		
+		return this.post<AuthToken>(
+			this.ESITokenUrl,
+			new URLSearchParams({grant_type: "authorization_code", code: code}).toString(),
+			{ headers: {"content-type": "application/x-www-form-urlencoded"} }
+		);
 	}
 
 	willSendRequest(request: RequestOptions): ValueOrPromise<void>
 	{
-		request.headers.set('accept', 'application/json');
-		request.headers.set('content-type', 'application/json');
+		if (typeof(request.headers.get('content-type')) === 'undefined') {
+			request.headers.set('content-type', 'application/json');
+		}
+		if (typeof(request.headers.get('accept')) === 'undefined') {
+			request.headers.set('accept', 'application/json');
+		}
 		if (this.context.token.length > 0) {
 			request.headers.set('Authorization', this.context.token);
 		};

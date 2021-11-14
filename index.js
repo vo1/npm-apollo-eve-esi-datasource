@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ESIDataSource = void 0;
 const apollo_datasource_rest_1 = require("apollo-datasource-rest");
 const humps_1 = __importDefault(require("humps"));
+const url_1 = require("url");
 const base64 = require('base-64');
 class ESIDataSource extends apollo_datasource_rest_1.RESTDataSource {
     constructor() {
@@ -58,12 +59,16 @@ class ESIDataSource extends apollo_datasource_rest_1.RESTDataSource {
     getAuthorizationToken(code) {
         return __awaiter(this, void 0, void 0, function* () {
             this.oneTimeAuthorizationToken = 'Basic ' + base64.encode(this.context.ESI.clientId + ':' + this.context.ESI.clientSecret);
-            return this.post(this.ESITokenUrl, JSON.stringify({ grant_type: "authorization_code", code: code }));
+            return this.post(this.ESITokenUrl, new url_1.URLSearchParams({ grant_type: "authorization_code", code: code }).toString(), { headers: { "content-type": "application/x-www-form-urlencoded" } });
         });
     }
     willSendRequest(request) {
-        request.headers.set('accept', 'application/json');
-        request.headers.set('content-type', 'application/json');
+        if (typeof (request.headers.get('content-type')) === 'undefined') {
+            request.headers.set('content-type', 'application/json');
+        }
+        if (typeof (request.headers.get('accept')) === 'undefined') {
+            request.headers.set('accept', 'application/json');
+        }
         if (this.context.token.length > 0) {
             request.headers.set('Authorization', this.context.token);
         }
