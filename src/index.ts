@@ -64,13 +64,17 @@ export class ESIDataSource extends RESTDataSource<ESIContext>
 		return new Promise((r) => r(result));
 	}
 
-	getSSOLoginURL(callbackUri: string, state?: string): string
+	getSSOLoginURL(callbackUri: string, state?: string, scopes?: [string]): string
 	{
-		let _state: string = state || 'esi-gql-data-source';
+		let _state: string = state || 'esi-gql-data-source',
+			_scopes = this.context.ESI.scopes;
+		if (typeof(scopes) !== 'undefined') {
+			_scopes = [ ..._scopes, ...scopes ];
+		}
 		return encodeURI(
 			this.ESILoginUrl
 				.replace('{{client_id}}', this.context.ESI.clientId)
-				.replace('{{scopes}}', this.context.ESI.scopes.join(' '))
+				.replace('{{scopes}}', _scopes.join(' '))
 				.replace('{{redirect_uri}}', callbackUri)
 				.replace('{{state}}', _state)
 		);
